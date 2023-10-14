@@ -1,0 +1,14 @@
+[Fri Oct 13 23:54:06.266934 2023] [mpm_prefork:notice] [pid 6659] AH00163: Apache/2.4.57 (Debian) configured -- resuming normal operations
+[Fri Oct 13 23:54:06.267048 2023] [core:notice] [pid 6659] AH00094: Command line: '/usr/sbin/apache2 -f /usr/share/gnome-user-share/dav_user_2.4.conf -C Listen 34911'
+[Fri Oct 13 23:54:08.055737 2023] [mpm_prefork:notice] [pid 6659] AH00169: caught SIGTERM, shutting down
+[Fri Oct 13 23:54:09.080765 2023] [mpm_prefork:notice] [pid 6670] AH00163: Apache/2.4.57 (Debian) configured -- resuming normal operations
+[Fri Oct 13 23:54:09.080920 2023] [core:notice] [pid 6670] AH00094: Command line: '/usr/sbin/apache2 -f /usr/share/gnome-user-share/dav_user_2.4.conf -C Listen 34685 -D RequirePasswordAlways'
+WARNING: Unhandled message: interface=org.freedesktop.DBus, path=/org/freedesktop/DBus, member=ActivatableServicesChanged
+WARNING: Unhandled message: interface=org.freedesktop.DBus, path=/org/freedesktop/DBus, member=ActivatableServicesChanged
+WARNING: Unhandled message: interface=org.freedesktop.DBus, path=/org/freedesktop/DBus, member=ActivatableServicesChanged
+WARNING: Unhandled message: interface=org.freedesktop.DBus, path=/org/freedesktop/DBus, member=ActivatableServicesChanged
+[Sat Oct 14 01:13:31.118525 2023] [mpm_prefork:notice] [pid 6670] AH00169: caught SIGTERM, shutting down
+[Sat Oct 14 12:39:51.500942 2023] [mpm_prefork:notice] [pid 9862] AH00163: Apache/2.4.57 (Debian) configured -- resuming normal operations
+[Sat Oct 14 12:39:51.501071 2023] [core:notice] [pid 9862] AH00094: Command line: '/usr/sbin/apache2 -f /usr/share/gnome-user-share/dav_user_2.4.conf -C Listen 44507 -D RequirePasswordAlways'
+[Sat Oct 14 13:58:15.083147 2023] [mpm_prefork:notice] [pid 2074] AH00163: Apache/2.4.57 (Debian) configured -- resuming normal operations
+[Sat Oct 14 13:58:15.083418 2023] [core:notice] [pid 2074] AH00094: Command line: '/usr/sbin/apache2 -f /usr/share/gnome-user-share/dav_user_2.4.conf -C Listen 39961 -D RequirePasswordAlways'
