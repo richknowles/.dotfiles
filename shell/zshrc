@@ -1,0 +1,166 @@
+# ~/.zshrc - Zsh configuration
+# Source this from your actual ~/.zshrc
+
+# ============================================================================
+# PLATFORM DETECTION
+# ============================================================================
+case "$(uname -s)" in
+    Linux*)
+        if grep -qi microsoft /proc/version 2>/dev/null; then
+            export PLATFORM="wsl"
+        else
+            export PLATFORM="linux"
+        fi
+        ;;
+    Darwin*)
+        export PLATFORM="macos"
+        ;;
+    CYGWIN*|MINGW*|MSYS*)
+        export PLATFORM="windows"
+        ;;
+    *)
+        export PLATFORM="unknown"
+        ;;
+esac
+
+# ============================================================================
+# PATH CONFIGURATION
+# ============================================================================
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+
+# Platform-specific paths
+case "$PLATFORM" in
+    macos)
+        if [ -d "/opt/homebrew/bin" ]; then
+            export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+        fi
+        ;;
+esac
+
+# ============================================================================
+# ZSH OPTIONS
+# ============================================================================
+setopt AUTO_CD              # cd by typing directory name
+setopt CORRECT              # Command correction
+setopt HIST_IGNORE_DUPS     # Ignore duplicate history
+setopt HIST_IGNORE_SPACE    # Ignore commands starting with space
+setopt SHARE_HISTORY        # Share history between sessions
+setopt APPEND_HISTORY       # Append to history file
+setopt INC_APPEND_HISTORY   # Add commands immediately
+
+# History configuration
+HISTSIZE=10000
+SAVEHIST=20000
+HISTFILE=~/.zsh_history
+
+# ============================================================================
+# COMPLETION
+# ============================================================================
+autoload -Uz compinit
+compinit
+
+# Case-insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' menu select
+
+# ============================================================================
+# ENVIRONMENT VARIABLES
+# ============================================================================
+export EDITOR="vim"
+export VISUAL="$EDITOR"
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+# ============================================================================
+# ALIASES
+# ============================================================================
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+alias ll="ls -alF"
+alias la="ls -A"
+alias l="ls -CF"
+
+# Git shortcuts
+alias g="git"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git pull"
+alias gd="git diff"
+alias gco="git checkout"
+alias gb="git branch"
+alias glog="git log --oneline --graph --decorate"
+
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+
+# Platform-specific aliases
+case "$PLATFORM" in
+    macos)
+        alias ls="ls -G"
+        alias finder="open ."
+        ;;
+    linux|wsl)
+        alias ls="ls --color=auto"
+        alias grep="grep --color=auto"
+        ;;
+esac
+
+if [ "$PLATFORM" = "wsl" ]; then
+    alias explorer="explorer.exe ."
+    alias code="code.exe"
+fi
+
+# ============================================================================
+# FUNCTIONS
+# ============================================================================
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+extract() {
+    if [ -f "$1" ]; then
+        case "$1" in
+            *.tar.bz2)   tar xjf "$1"     ;;
+            *.tar.gz)    tar xzf "$1"     ;;
+            *.bz2)       bunzip2 "$1"     ;;
+            *.rar)       unrar x "$1"     ;;
+            *.gz)        gunzip "$1"      ;;
+            *.tar)       tar xf "$1"      ;;
+            *.tbz2)      tar xjf "$1"     ;;
+            *.tgz)       tar xzf "$1"     ;;
+            *.zip)       unzip "$1"       ;;
+            *.Z)         uncompress "$1"  ;;
+            *.7z)        7z x "$1"        ;;
+            *)           echo "'$1' cannot be extracted" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+# ============================================================================
+# PROMPT
+# ============================================================================
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats ' (%b)'
+
+setopt PROMPT_SUBST
+PROMPT='%F{green}%n@%m%f:%F{blue}%~%f%F{yellow}${vcs_info_msg_0_}%f%# '
+
+# ============================================================================
+# SOURCE PLATFORM-SPECIFIC CONFIG
+# ============================================================================
+DOTFILES_DIR="$HOME/.dotfiles"
+if [ -f "$DOTFILES_DIR/shell/zshrc.$PLATFORM" ]; then
+    source "$DOTFILES_DIR/shell/zshrc.$PLATFORM"
+fi
+
+if [ -f "$HOME/.zshrc.local" ]; then
+    source "$HOME/.zshrc.local"
+fi
