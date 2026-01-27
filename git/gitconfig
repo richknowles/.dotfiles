@@ -1,0 +1,92 @@
+# ~/.gitconfig - Git configuration
+# Copy to ~/.gitconfig and update [user] section
+
+[user]
+    # IMPORTANT: Update these with your actual info
+    name = Your Name
+    email = your.email@example.com
+
+[init]
+    defaultBranch = main
+
+[core]
+    editor = vim
+    autocrlf = input
+    whitespace = fix
+    excludesfile = ~/.gitignore_global
+
+[color]
+    ui = auto
+    branch = auto
+    diff = auto
+    status = auto
+
+[pull]
+    rebase = false
+
+[push]
+    default = current
+    autoSetupRemote = true
+
+[fetch]
+    prune = true
+
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+
+[diff]
+    tool = vimdiff
+    colorMoved = zebra
+
+[alias]
+    # Status and info
+    s = status -s
+    st = status
+
+    # Branching
+    br = branch
+    co = checkout
+    cb = checkout -b
+
+    # Commits
+    ci = commit
+    cm = commit -m
+    ca = commit --amend
+
+    # Diff
+    df = diff
+    dc = diff --cached
+
+    # Logging
+    lg = log --oneline --graph --decorate --all
+    ll = log --pretty=format:'%C(yellow)%h%Creset %s %C(green)(%cr)%Creset %C(blue)<%an>%Creset' --abbrev-commit
+    last = log -1 HEAD --stat
+
+    # Undo
+    unstage = reset HEAD --
+    undo = reset --soft HEAD~1
+
+    # Stash
+    sl = stash list
+    sp = stash pop
+    ss = stash save
+
+    # Remote
+    rv = remote -v
+
+    # Clean
+    cleanup = !git branch --merged | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -d
+
+[credential]
+    # Platform-specific credential helpers are set in includes below
+
+# Include platform-specific configs
+[includeIf "gitdir:/home/"]
+    path = ~/.dotfiles/git/gitconfig.linux
+
+[includeIf "gitdir:/Users/"]
+    path = ~/.dotfiles/git/gitconfig.macos
+
+[includeIf "gitdir:/mnt/c/"]
+    path = ~/.dotfiles/git/gitconfig.wsl

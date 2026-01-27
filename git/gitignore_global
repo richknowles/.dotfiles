@@ -1,0 +1,109 @@
+# Global gitignore - ignores common files across all repos
+# Symlink to ~/.gitignore_global
+
+# ============================================================================
+# OS GENERATED FILES
+# ============================================================================
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ============================================================================
+# EDITOR/IDE FILES
+# ============================================================================
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea_modules/
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+Session.vim
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# ============================================================================
+# DEVELOPMENT
+# ============================================================================
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.egg-info/
+.eggs/
+venv/
+.venv/
+env/
+.env
+
+# Ruby
+*.gem
+.bundle/
+vendor/bundle
+
+# Build outputs
+build/
+dist/
+*.log
+
+# ============================================================================
+# SECRETS & CREDENTIALS
+# ============================================================================
+*.pem
+*.key
+*.p12
+.env
+.env.local
+.env.*.local
+*.secrets
+credentials.json
+secrets.yaml
+secrets.yml

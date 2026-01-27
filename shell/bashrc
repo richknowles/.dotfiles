@@ -1,0 +1,160 @@
+# ~/.bashrc - Bash configuration
+# Source this from your actual ~/.bashrc
+
+# ============================================================================
+# PLATFORM DETECTION
+# ============================================================================
+case "$(uname -s)" in
+    Linux*)
+        if grep -qi microsoft /proc/version 2>/dev/null; then
+            export PLATFORM="wsl"
+        else
+            export PLATFORM="linux"
+        fi
+        ;;
+    Darwin*)
+        export PLATFORM="macos"
+        ;;
+    CYGWIN*|MINGW*|MSYS*)
+        export PLATFORM="windows"
+        ;;
+    *)
+        export PLATFORM="unknown"
+        ;;
+esac
+
+# ============================================================================
+# PATH CONFIGURATION
+# ============================================================================
+# Add local bin directories
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+
+# Platform-specific paths
+case "$PLATFORM" in
+    macos)
+        # Homebrew
+        if [ -d "/opt/homebrew/bin" ]; then
+            export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+        fi
+        ;;
+    wsl)
+        # Add Windows interop paths if needed
+        ;;
+esac
+
+# ============================================================================
+# ENVIRONMENT VARIABLES
+# ============================================================================
+export EDITOR="vim"
+export VISUAL="$EDITOR"
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+# History configuration
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+export HISTCONTROL=ignoreboth:erasedups
+shopt -s histappend
+
+# ============================================================================
+# ALIASES
+# ============================================================================
+# Navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+# List files
+alias ll="ls -alF"
+alias la="ls -A"
+alias l="ls -CF"
+
+# Git shortcuts
+alias g="git"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git pull"
+alias gd="git diff"
+alias gco="git checkout"
+alias gb="git branch"
+alias glog="git log --oneline --graph --decorate"
+
+# Safety nets
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+
+# Platform-specific aliases
+case "$PLATFORM" in
+    macos)
+        alias ls="ls -G"
+        # Open Finder
+        alias finder="open ."
+        ;;
+    linux|wsl)
+        alias ls="ls --color=auto"
+        alias grep="grep --color=auto"
+        ;;
+esac
+
+# WSL-specific
+if [ "$PLATFORM" = "wsl" ]; then
+    alias explorer="explorer.exe ."
+    alias code="code.exe"
+fi
+
+# ============================================================================
+# FUNCTIONS
+# ============================================================================
+# Create directory and cd into it
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Extract various archive types
+extract() {
+    if [ -f "$1" ]; then
+        case "$1" in
+            *.tar.bz2)   tar xjf "$1"     ;;
+            *.tar.gz)    tar xzf "$1"     ;;
+            *.bz2)       bunzip2 "$1"     ;;
+            *.rar)       unrar x "$1"     ;;
+            *.gz)        gunzip "$1"      ;;
+            *.tar)       tar xf "$1"      ;;
+            *.tbz2)      tar xjf "$1"     ;;
+            *.tgz)       tar xzf "$1"     ;;
+            *.zip)       unzip "$1"       ;;
+            *.Z)         uncompress "$1"  ;;
+            *.7z)        7z x "$1"        ;;
+            *)           echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+# ============================================================================
+# PROMPT
+# ============================================================================
+# Git branch in prompt
+parse_git_branch() {
+    git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+# Colorful prompt with git branch
+PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[33m\]$(parse_git_branch)\[\033[00m\]\$ '
+
+# ============================================================================
+# SOURCE PLATFORM-SPECIFIC CONFIG
+# ============================================================================
+DOTFILES_DIR="$HOME/.dotfiles"
+if [ -f "$DOTFILES_DIR/shell/bashrc.$PLATFORM" ]; then
+    source "$DOTFILES_DIR/shell/bashrc.$PLATFORM"
+fi
+
+# Source local overrides (not tracked in git)
+if [ -f "$HOME/.bashrc.local" ]; then
+    source "$HOME/.bashrc.local"
+fi

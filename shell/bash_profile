@@ -1,0 +1,10 @@
+# ~/.bash_profile - Login shell configuration
+# This file is executed for login shells
+
+# Source .bashrc if it exists
+if [ -f "$HOME/.bashrc" ]; then
+    source "$HOME/.bashrc"
+fi
+
+# Add any login-specific configuration below
+# (Environment variables that should only be set once)
