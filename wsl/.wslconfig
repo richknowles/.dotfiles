@@ -1,0 +1,29 @@
+# %USERPROFILE%\.wslconfig - Global WSL2 settings (Windows side)
+# Copy this to C:\Users\YourName\.wslconfig
+# Then restart WSL: wsl --shutdown (from PowerShell)
+
+[wsl2]
+# Limit memory (default: 50% of Windows RAM)
+memory=8GB
+
+# Limit CPU cores
+processors=4
+
+# Swap file size
+swap=4GB
+
+# Enable localhost forwarding
+localhostForwarding=true
+
+# Nested virtualization (for Docker, VMs)
+nestedVirtualization=true
+
+# Turn off default connection to bind WSL 2 localhost to Windows localhost
+# localhostforwarding=true
+
+[experimental]
+# Automatically release cached memory
+autoMemoryReclaim=gradual
+
+# Sparse VHD - reclaim disk space automatically
+sparseVhd=true
