@@ -1,6 +1,14 @@
 # .dotfiles
 
-Personal configuration files for shell, git, vim, and more. Works across **macOS** (including Hackintosh), **Linux** (including Omarchy), and **WSL**.
+Personal configuration files across **CachyOS** (Hyprland/ML4W), **macOS** (Hackintosh Sonoma), and **WSL**.
+
+## Current Setup
+
+| Machine | OS | Desktop | Shell |
+|---------|-----|---------|-------|
+| **P15 Gen 1** (i7-10, 32GB, Quadro T1000) | CachyOS (ZFS) | Hyprland / ML4W | Fish |
+| **P15 Gen 1** (same machine, NVMe 2) | ~~macOS Sonoma (RIP)~~ | - | - |
+| **Tower** (5960X) | Proxmox (ZFS) | - | - |
 
 ## Quick Start
 
@@ -17,149 +25,135 @@ cd ~/.dotfiles
 
 ```
 ~/.dotfiles/
-├── shell/           # Shell configurations
-│   ├── bashrc       # Bash config with aliases, functions, prompt
-│   ├── bash_profile # Login shell config
-│   └── zshrc        # Zsh config (if you use zsh)
-├── git/             # Git configurations
-│   ├── gitconfig    # Git aliases, settings, conditional includes
-│   ├── gitignore_global  # Global ignores for all repos
-│   ├── gitconfig.macos   # macOS-specific (osxkeychain)
-│   ├── gitconfig.linux   # Linux-specific
-│   └── gitconfig.wsl     # WSL-specific (Windows credential manager)
-├── vim/             # Vim configuration
-│   └── vimrc        # Vim settings and keybindings
-├── config/          # XDG config files (future use)
-├── scripts/         # Utility scripts (future use)
-├── wsl/             # WSL-specific configs (future use)
-├── macos/           # macOS-specific configs (future use)
-├── linux/           # Linux-specific configs (future use)
-└── install.sh       # Installation script
+├── config/              # XDG configs (~/.config)
+│   ├── hypr/            # Hyprland (WM, lock, paper, idle)
+│   ├── waybar/          # Waybar (status bar)
+│   ├── ml4w/            # ML4W dotfiles manager
+│   ├── kitty/           # Kitty terminal
+│   ├── fish/            # Fish shell
+│   ├── neofetch/        # Neofetch
+│   ├── mc/              # Midnight Commander
+│   └── rclone/          # (ignored - has creds)
+│
+├── shell/               # Shell configurations
+│   ├── bashrc           # Bash config (cross-platform)
+│   ├── bashrc.wsl       # WSL-specific bash
+│   ├── zshrc            # Zsh config
+│   └── ...
+│
+├── git/                 # Git configurations
+│   ├── gitconfig        # Main config
+│   ├── gitconfig.macos  # macOS (osxkeychain)
+│   ├── gitconfig.linux  # Linux
+│   ├── gitconfig.wsl    # WSL (Windows GCM)
+│   └── gitignore_global # Global ignores
+│
+├── vim/                 # Vim configuration
+│   └── vimrc
+│
+├── linux/               # Linux-specific
+│   ├── packages-cachyos.txt  # Installed packages
+│   ├── packages-aur.txt      # AUR packages
+│   ├── zfs-pools.txt         # ZFS pool info
+│   └── kvm-vms.txt           # VM list
+│
+├── wsl/                 # WSL configs
+│   ├── wsl.conf         # Per-distro settings
+│   ├── .wslconfig       # Global WSL2 settings
+│   └── .wsl-config      # Custom config
+│
+├── windows/             # Windows configs (archived)
+│   ├── collect-windows-configs.ps1
+│   ├── windows-terminal.json
+│   ├── vscode-settings.json
+│   └── ...
+│
+├── scripts/
+│   ├── collect-cachyos-configs.sh  # CachyOS collector
+│   ├── collect-wsl-configs.sh      # WSL collector
+│   └── bounty/                     # Bug bounty toolkit
+│       ├── install-tools.sh
+│       ├── recon.sh
+│       └── okta-recon.sh
+│
+├── docs/                # Session notes
+│   └── SESSION-*.md
+│
+└── install.sh           # Auto-symlink installer
+```
+
+## Config Collectors
+
+### CachyOS / ML4W / Hyprland
+```bash
+cd ~/.dotfiles
+bash scripts/collect-cachyos-configs.sh
+```
+Collects: Hyprland, Waybar, ML4W, Kitty, Fish, btop, packages, ZFS info, VM list
+
+### WSL (Ubuntu)
+```bash
+bash scripts/collect-wsl-configs.sh
+```
+
+### Windows (PowerShell)
+```powershell
+& "\\wsl$\Ubuntu-22.04\home\rich\.dotfiles\windows\collect-windows-configs.ps1"
 ```
 
 ## Installation
 
 ### Full Installation
-
 ```bash
 ./install.sh --all    # or just ./install.sh
 ```
 
 ### Selective Installation
-
 ```bash
-./install.sh --shell  # Only shell configs (bash/zsh)
+./install.sh --shell  # Only shell configs
 ./install.sh --git    # Only git config
 ./install.sh --vim    # Only vim config
 ```
 
-### Manual Installation
-
-If you prefer to manage symlinks yourself:
-
+### Manual Symlinks (CachyOS)
 ```bash
-# Shell
-ln -s ~/.dotfiles/shell/bashrc ~/.bashrc
-ln -s ~/.dotfiles/shell/bash_profile ~/.bash_profile
-ln -s ~/.dotfiles/shell/zshrc ~/.zshrc  # if using zsh
+# Hyprland (backup ML4W originals first)
+ln -sf ~/.dotfiles/config/hypr/hyprland.conf ~/.config/hypr/hyprland.conf
+
+# Kitty
+ln -sf ~/.dotfiles/config/kitty/kitty.conf ~/.config/kitty/kitty.conf
+
+# Fish
+ln -sf ~/.dotfiles/config/fish/config.fish ~/.config/fish/config.fish
 
 # Git
-ln -s ~/.dotfiles/git/gitconfig ~/.gitconfig
-ln -s ~/.dotfiles/git/gitignore_global ~/.gitignore_global
-
-# Vim
-ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
-mkdir -p ~/.vim/{backup,swap,undo}
+ln -sf ~/.dotfiles/git/gitconfig ~/.gitconfig
 ```
 
-## Post-Installation
+## Bug Bounty Toolkit
 
-### Set Your Git Identity
+See [scripts/bounty/README.md](scripts/bounty/README.md)
 
 ```bash
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
+# Install tools on hunting VM
+cd ~/.dotfiles/scripts/bounty
+./install-tools.sh
+
+# Run recon
+./okta-recon.sh okta.com
+./recon.sh target.com program-name
 ```
 
-### Reload Your Shell
+## Known Fixes
 
+### eza libllhttp version mismatch (CachyOS)
+When `llhttp` updates but `eza` isn't rebuilt yet:
 ```bash
-source ~/.bashrc  # or source ~/.zshrc
+# Check the issue
+ldd /usr/bin/eza | grep "not found"
+# Symlink the new version
+sudo ln -s /usr/lib/libllhttp.so.9.3 /usr/lib/libllhttp.so.9.2
 ```
-
-## Platform-Specific Features
-
-The configs automatically detect your platform and adjust:
-
-| Feature | macOS | Linux | WSL |
-|---------|-------|-------|-----|
-| `ls` colors | `-G` flag | `--color=auto` | `--color=auto` |
-| Git credential helper | osxkeychain | cache | Windows GCM |
-| Homebrew paths | Auto-added | N/A | N/A |
-| `explorer.exe` alias | N/A | N/A | Enabled |
-| `code.exe` alias | N/A | N/A | Enabled |
-
-## Customization
-
-### Local Overrides
-
-Create these files for machine-specific settings (not tracked by git):
-
-- `~/.bashrc.local` - Local bash settings
-- `~/.zshrc.local` - Local zsh settings
-
-### Platform-Specific Extensions
-
-Add platform-specific configs:
-
-- `~/.dotfiles/shell/bashrc.macos`
-- `~/.dotfiles/shell/bashrc.linux`
-- `~/.dotfiles/shell/bashrc.wsl`
-
-## Key Aliases
-
-### Navigation
-- `..` / `...` / `....` - Go up directories
-- `ll` - Long list with details
-- `la` - List all including hidden
-
-### Git
-- `g` - git
-- `gs` - git status
-- `ga` - git add
-- `gc` - git commit
-- `gp` - git push
-- `gl` - git pull
-- `gd` - git diff
-- `glog` - Pretty git log graph
-
-### Functions
-- `mkcd <dir>` - Create directory and cd into it
-- `extract <file>` - Extract any archive type
-
-## Useful Git Aliases
-
-From the gitconfig:
-
-```bash
-git lg      # Pretty log graph
-git last    # Show last commit
-git undo    # Undo last commit (soft)
-git cleanup # Delete merged branches
-```
-
-## Backup
-
-When running `install.sh`, existing files are backed up to:
-```
-~/.dotfiles_backup/<timestamp>/
-```
-
-## Adding New Configs
-
-1. Add the config file to the appropriate directory
-2. Update `install.sh` to symlink it
-3. Commit and push
 
 ## Syncing Across Machines
 
@@ -172,24 +166,8 @@ cd ~/.dotfiles
 # To update
 cd ~/.dotfiles
 git pull
-./install.sh  # Re-run to pick up any new files
+./install.sh
 ```
-
-## Future Additions
-
-Directories ready for expansion:
-- `config/` - For XDG configs (~/.config/*)
-- `scripts/` - Utility scripts
-- `wsl/` - WSL-specific files (wsl.conf, etc.)
-- `macos/` - macOS-specific (Brewfile, defaults, etc.)
-- `linux/` - Linux-specific (systemd units, etc.)
-
-## Omarchy Notes
-
-When switching to Omarchy, you may want to:
-1. Check if they have their own dotfile management
-2. Source these configs from their defaults
-3. Add any Omarchy-specific configs to `linux/`
 
 ## License
 
