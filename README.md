@@ -4,11 +4,11 @@ Personal configuration files across **CachyOS** (Hyprland/ML4W), **macOS** (Hack
 
 ## Current Setup
 
-| Machine | OS | Desktop | Shell |
-|---------|-----|---------|-------|
-| **P15 Gen 1** (i7-10, 32GB, Quadro T1000) | CachyOS (ZFS) | Hyprland / ML4W | Fish |
-| **P15 Gen 1** (same machine, NVMe 2) | ~~macOS Sonoma (RIP)~~ | - | - |
-| **Tower** (5960X) | Proxmox (ZFS) | - | - |
+| Drive | OS | Desktop | Notes |
+|-------|-----|---------|-------|
+| **NVMe 0** | macOS Sonoma (OpenCore) | Aqua | Pending reinstall, Intel UHD 630 only (Quadro T1000 unsupported) |
+| **NVMe 1** | CachyOS (ZFS) | Hyprland / ML4W | Daily driver, Fish shell |
+| **Tower** | Proxmox (ZFS) | - | 5960X, VMs, 18+ months uptime |
 
 ## Quick Start
 
