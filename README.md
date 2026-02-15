@@ -10,6 +10,8 @@ Personal configuration files across **CachyOS** (Hyprland/ML4W), **macOS** (Hack
 | **NVMe 1** | CachyOS (ZFS) | Hyprland / ML4W | Daily driver, Fish shell |
 | **Tower** | Proxmox (ZFS) | - | 5960X, VMs, 18+ months uptime |
 
+**Bootloader:** rEFInd (auto-detects all OSes)
+
 ## Quick Start
 
 ```bash

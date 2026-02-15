@@ -28,7 +28,7 @@
 ### Hackintosh Notes
 - **GPU:** Quadro T1000 (Turing) has NO macOS support - must use Intel UHD 630
 - **Recommendation:** Sonoma (14.x) over Sequoia (15.x) - more stable kexts for 10th gen
-- **Boot:** OpenCore, separate from CachyOS bootloader
+- **Bootloader:** rEFInd (auto-detects CachyOS + OpenCore)
 
 ### P15 Software Stack
 - **OS:** CachyOS (Arch-based, rolling release)
@@ -84,8 +84,7 @@
 - [ ] Start Okta recon on Bugcrowd
 - [ ] Reinstall macOS Sonoma (OpenCore) on NVMe 0
   - Use Intel UHD 630 for display (Quadro T1000 unsupported)
-  - Keep OpenCore EFI separate from CachyOS
-  - Consider BIOS boot menu for OS selection
+  - rEFInd will auto-detect OpenCore + CachyOS
 
 ---
 
