@@ -1,0 +1,5 @@
+burpsuite 2026.2-1
+dirb 2.22-2
+hyprshade 4.0.1-1
+python-pywalfox 2.7.4-1
+zfs-auto-snapshot 1.2.4-1
