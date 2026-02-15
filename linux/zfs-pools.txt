@@ -1,0 +1,11 @@
+NAME        SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+zpcachyos   920G  41.2G   879G        -         -     0%     4%  1.00x    ONLINE  -
+  pool: zpcachyos
+ state: ONLINE
+config:
+
+	NAME                                    STATE     READ WRITE CKSUM
+	zpcachyos                               ONLINE       0     0     0
+	  e61f971e-4d0a-4a9d-81f5-7bd530c41e50  ONLINE       0     0     0
+
+errors: No known data errors
