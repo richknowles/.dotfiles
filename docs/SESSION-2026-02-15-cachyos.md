@@ -16,8 +16,19 @@
 
 | Machine | Specs | OS |
 |---------|-------|----|
-| **P15 Gen 1 Laptop** | i7 10th Gen, 32GB RAM, 2x 1TB NVMe, Quadro T1000 | CachyOS (ZFS) |
+| **P15 Gen 1 Laptop** | i7 10th Gen, 32GB RAM, 2x 1TB NVMe, Quadro T1000 | Dual boot |
 | **Tower** | 5960X | Proxmox (ZFS, 18+ months uptime) |
+
+### P15 Drive Layout
+| Drive | OS | Notes |
+|-------|-----|-------|
+| **NVMe 0** | macOS Sonoma (OpenCore) | Pending reinstall |
+| **NVMe 1** | CachyOS (ZFS) | Daily driver |
+
+### Hackintosh Notes
+- **GPU:** Quadro T1000 (Turing) has NO macOS support - must use Intel UHD 630
+- **Recommendation:** Sonoma (14.x) over Sequoia (15.x) - more stable kexts for 10th gen
+- **Boot:** OpenCore, separate from CachyOS bootloader
 
 ### P15 Software Stack
 - **OS:** CachyOS (Arch-based, rolling release)
@@ -71,7 +82,10 @@
 - [ ] Set up hunting VM on Proxmox (Kali running)
 - [ ] Run `install-tools.sh` on Kali VM
 - [ ] Start Okta recon on Bugcrowd
-- [ ] Consider rebuilding OpenCore Sonoma on a spare drive
+- [ ] Reinstall macOS Sonoma (OpenCore) on NVMe 0
+  - Use Intel UHD 630 for display (Quadro T1000 unsupported)
+  - Keep OpenCore EFI separate from CachyOS
+  - Consider BIOS boot menu for OS selection
 
 ---
 
