@@ -1,8 +1,8 @@
 NAME                          USED  AVAIL  REFER  MOUNTPOINT
-zpcachyos                    41.3G   850G    96K  none
-zpcachyos/ROOT               41.2G   850G    96K  none
-zpcachyos/ROOT/cos           41.2G   850G    96K  none
-zpcachyos/ROOT/cos/home      8.33G   850G  8.05G  /home
-zpcachyos/ROOT/cos/root      28.7G   850G  25.9G  /
-zpcachyos/ROOT/cos/varcache  4.15G   850G  4.15G  /var/cache
-zpcachyos/ROOT/cos/varlog    13.2M   850G  1.52M  /var/log
+zpcachyos                    41.8G   850G    96K  none
+zpcachyos/ROOT               41.8G   850G    96K  none
+zpcachyos/ROOT/cos           41.8G   850G    96K  none
+zpcachyos/ROOT/cos/home      8.47G   850G  8.16G  /home
+zpcachyos/ROOT/cos/root      29.1G   850G  26.1G  /
+zpcachyos/ROOT/cos/varcache  4.23G   850G  4.23G  /var/cache
+zpcachyos/ROOT/cos/varlog    17.0M   850G  1.74M  /var/log

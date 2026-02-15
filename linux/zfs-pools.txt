@@ -1,5 +1,5 @@
 NAME        SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
-zpcachyos   920G  41.2G   879G        -         -     0%     4%  1.00x    ONLINE  -
+zpcachyos   920G  41.7G   878G        -         -     0%     4%  1.00x    ONLINE  -
   pool: zpcachyos
  state: ONLINE
 config:
