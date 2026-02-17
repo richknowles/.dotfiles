@@ -21,7 +21,21 @@ git clone https://github.com/richknowles/.dotfiles.git ~/.dotfiles
 # Run the installer
 cd ~/.dotfiles
 ./install.sh
+
+# Update package lists (after installing new apps)
+./scripts/packages.sh
 ```
+
+## Installed Packages
+
+### Core (Pacman): 1,422 packages
+Key packages: hyprland, kitty, fish, waybar, wl-clipboard, grim, slurp, tesseract, fastfetch, btop
+
+### AUR: 16 packages
+burpsuite, debtap, dirb, hyprshade, libcava, oracle-instantclient-basic, python-pywalfox, rclone-appmenu, rclone-manager, rclone-mount-service, rclone-ui-bin, rclonefzf, stoat-desktop-bin, termius, typora, zfs-auto-snapshot
+
+### Flatpak: 5 apps
+com.ml4w.calendar, com.ml4w.hyprlandsettings, com.ml4w.settings, com.ml4w.sidebar, com.ml4w.welcome
 
 ## What's Included
 
@@ -85,6 +99,15 @@ cd ~/.dotfiles
 ```
 
 ## Config Collectors
+
+### Package Tracking
+```bash
+# Update package lists (run after installing new apps)
+./scripts/packages.sh
+
+# Install packages on new system
+./scripts/install-packages.sh
+```
 
 ### CachyOS / ML4W / Hyprland
 ```bash
