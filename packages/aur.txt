@@ -1,0 +1,16 @@
+burpsuite
+debtap
+dirb
+hyprshade
+libcava
+oracle-instantclient-basic
+python-pywalfox
+rclone-appmenu
+rclone-manager
+rclone-mount-service
+rclone-ui-bin
+rclonefzf
+stoat-desktop-bin
+termius
+typora
+zfs-auto-snapshot
