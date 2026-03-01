@@ -1,0 +1,1 @@
+dolphin --new-window
