@@ -18,7 +18,9 @@
       format = "iso";
       modules = [
         ({ pkgs, ... }: {
-          # --- RAM OS SETTINGS ---
+          # 1. Add this to fix the 'stateVersion' warning
+          system.stateVersion = "24.11"; 
+
           boot.kernelParams = [ "copytoram" ];
           networking.networkmanager.enable = true;
 
@@ -26,17 +28,13 @@
           users.users.nixos = {
             isNormalUser = true;
             extraGroups = [ "wheel" "networkmanager" ];
-            # Password 'nixos' for sudo/login
             initialPassword = "nixos"; 
           };
 
-          # --- PACKAGE LIST (Replacing your .txt lists) ---
+          # --- PACKAGE LIST ---
           environment.systemPackages = with pkgs; [
-            # Tools from your repo
-            kitty fish neofetch mc git vim tmux rclone
-            # Bug Bounty toolkit
+            kitty fish fastfetch mc git vim tmux rclone # Changed neofetch to fastfetch
             nmap ffuf gobuster dnsrecon
-            # GUI for Hyprland demo
             hyprland waybar
           ];
 
