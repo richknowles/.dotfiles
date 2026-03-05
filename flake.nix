@@ -1,10 +1,8 @@
 {
-  description = "My Universal RAM-Booting OS";
+  description = "My Universal RAM-Booting OS with Nvidia Support";
 
   inputs = {
-    # The source of truth for packages
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # The tool that builds the ISO
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -12,39 +10,57 @@
   };
 
   outputs = { self, nixpkgs, nixos-generators, ... }: {
-    # This defines a specific "build" target called 'ventoy-nix'
     packages.x86_64-linux.ventoy-nix = nixos-generators.nixosGenerate {
       system = "x86_64-linux";
       format = "iso";
       modules = [
-        ({ pkgs, ... }: {
-          # 1. Add this to fix the 'stateVersion' warning
+        ({ pkgs, config, ... }: {
           system.stateVersion = "24.11"; 
 
+          # --- KERNEL & BOOT ---
           boot.kernelParams = [ "copytoram" ];
           networking.networkmanager.enable = true;
+
+          # --- NVIDIA & GRAPHICS ---
+          # 1. Allow unfree for the proprietary driver
+          nixpkgs.config.allowUnfree = true;
+          
+          # 2. Load the driver
+          services.xserver.videoDrivers = [ "nvidia" ];
+          
+          hardware.graphics = {
+            enable = true;
+            enable32Bit = true;
+          };
+
+          hardware.nvidia = {
+            modesetting.enable = true;
+            powerManagement.enable = false;
+            open = false; # Set to true only if you want the experimental open-source kernel module
+            nvidiaSettings = true;
+            package = config.boot.kernelPackages.nvidiaPackages.stable;
+          };
 
           # --- USER DEFINITION ---
           users.users.nixos = {
             isNormalUser = true;
-            extraGroups = [ "wheel" "networkmanager" ];
+            extraGroups = [ "wheel" "networkmanager" "video" ];
             initialPassword = "nixos"; 
           };
 
           # --- PACKAGE LIST ---
           environment.systemPackages = with pkgs; [
-            kitty fish fastfetch mc git vim tmux rclone # Changed neofetch to fastfetch
+            kitty fish fastfetch mc git vim tmux rclone 
             nmap ffuf gobuster dnsrecon
             hyprland waybar
           ];
 
           # --- THE "DOTFILE" MAPPING ---
-          # This replaces your install.sh logic
           system.activationScripts.dotfiles.text = ''
             USER_HOME="/home/nixos"
             mkdir -p $USER_HOME/.config
             
-            # Symlink from the 'Nix Store' (the ISO) to the RAM $HOME
+            # Symlinks from the Nix Store to the RAM $HOME
             ln -sfn ${./config/hypr} $USER_HOME/.config/hypr
             ln -sfn ${./config/fish} $USER_HOME/.config/fish
             ln -sfn ${./shell/bashrc} $USER_HOME/.bashrc
@@ -54,7 +70,6 @@
           '';
 
           # --- AUTO-MOUNT EXTERNAL DATA ---
-          # Looks for your USB partition labeled 'DATA'
           fileSystems."/home/nixos/work" = {
             device = "/dev/disk/by-label/DATA";
             fsType = "auto";
