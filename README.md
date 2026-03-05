@@ -1,199 +1,84 @@
-# .dotfiles
+This is a great idea. Since you're building a "Security Lab," having a README that looks as sharp as the OS is essential.
 
-Personal configuration files across **CachyOS** (Hyprland/ML4W), **macOS** (Hackintosh Sonoma), and **WSL**.
+I have included a high-quality GIF placeholder at the top of the README that shows the standard **Hyprland** tiling and animations. I also reorganized the sections to match the final features we built (the Panic button, the encrypted data partition, and the Nvidia support).
 
-## Current Setup
+### Updated README.md
 
-| Drive | OS | Desktop | Notes |
-|-------|-----|---------|-------|
-| **NVMe 0** | macOS Sonoma (OpenCore) | Aqua | Pending reinstall, Intel UHD 630 only (Quadro T1000 unsupported) |
-| **NVMe 1** | CachyOS (ZFS) | Hyprland / ML4W | Daily driver, Fish shell |
-| **Tower** | Proxmox (ZFS) | - | 5960X, VMs, 18+ months uptime |
+Copy this into your `README.md` on GitHub:
 
-**Bootloader:** rEFInd (auto-detects all OSes)
+```markdown
+# 💀 My Ultimate RAM-Booting Security Lab
 
-## Quick Start
+![Hyprland Demo](https://raw.githubusercontent.com/vaxerski/Hyprland/main/assets/hyprland.gif)
 
+A professional-grade, disposable, and fully encrypted hacking environment built on **NixOS**. This system runs entirely in RAM to ensure zero forensic footprint on the host machine while maintaining high performance with native **Nvidia T1000** drivers.
+
+---
+
+## 🚀 Core Features
+* **Volatile Root:** Everything runs in `tmpfs` (RAM). Power off = Data gone.
+* **Encrypted Persistence:** Automatic LUKS mounting of `/dev/disk/by-label/DATA` to `/home/nixos/work`.
+* **Hardware Powered:** Full proprietary Nvidia driver support for GPU-accelerated tasks.
+* **Security Stack:** Pre-configured with Burp Suite, Nmap, Metasploit, and modern web discovery tools.
+* **The Panic Button:** A dedicated Waybar module to instantly wipe RAM and trigger a cold reboot.
+
+---
+
+## ⌨️ Global Keybinds
+| Keybind | Action |
+| :--- | :--- |
+| `Super + Q` | Open Terminal (Kitty) |
+| `Super + E` | Open Text Editor (Kate) |
+| `Super + B` | Open Burp Suite |
+| `Super + W` | Open Chromium |
+| `Super + M` | Exit Hyprland |
+| **💀 Click** | **PANIC REBOOT** |
+
+---
+
+## 🛠 Quick Operations Manual
+
+### 1. Building the ISO
+If you are on the build machine (Parrot), run:
 ```bash
-# Clone the repo
-git clone https://github.com/richknowles/.dotfiles.git ~/.dotfiles
-
-# Run the installer
-cd ~/.dotfiles
-./install.sh
-
-# Update package lists (after installing new apps)
-./scripts/packages.sh
-```
-
-## Installed Packages
-
-### Core (Pacman): 1,422 packages
-Key packages: hyprland, kitty, fish, waybar, wl-clipboard, grim, slurp, tesseract, fastfetch, btop
-
-### AUR: 16 packages
-burpsuite, debtap, dirb, hyprshade, libcava, oracle-instantclient-basic, python-pywalfox, rclone-appmenu, rclone-manager, rclone-mount-service, rclone-ui-bin, rclonefzf, stoat-desktop-bin, termius, typora, zfs-auto-snapshot
-
-### Flatpak: 5 apps
-com.ml4w.calendar, com.ml4w.hyprlandsettings, com.ml4w.settings, com.ml4w.sidebar, com.ml4w.welcome
-
-## What's Included
-
-```
-~/.dotfiles/
-├── config/              # XDG configs (~/.config)
-│   ├── hypr/            # Hyprland (WM, lock, paper, idle)
-│   ├── waybar/          # Waybar (status bar)
-│   ├── ml4w/            # ML4W dotfiles manager
-│   ├── kitty/           # Kitty terminal
-│   ├── fish/            # Fish shell
-│   ├── neofetch/        # Neofetch
-│   ├── mc/              # Midnight Commander
-│   └── rclone/          # (ignored - has creds)
-│
-├── shell/               # Shell configurations
-│   ├── bashrc           # Bash config (cross-platform)
-│   ├── bashrc.wsl       # WSL-specific bash
-│   ├── zshrc            # Zsh config
-│   └── ...
-│
-├── git/                 # Git configurations
-│   ├── gitconfig        # Main config
-│   ├── gitconfig.macos  # macOS (osxkeychain)
-│   ├── gitconfig.linux  # Linux
-│   ├── gitconfig.wsl    # WSL (Windows GCM)
-│   └── gitignore_global # Global ignores
-│
-├── vim/                 # Vim configuration
-│   └── vimrc
-│
-├── linux/               # Linux-specific
-│   ├── packages-cachyos.txt  # Installed packages
-│   ├── packages-aur.txt      # AUR packages
-│   ├── zfs-pools.txt         # ZFS pool info
-│   └── kvm-vms.txt           # VM list
-│
-├── wsl/                 # WSL configs
-│   ├── wsl.conf         # Per-distro settings
-│   ├── .wslconfig       # Global WSL2 settings
-│   └── .wsl-config      # Custom config
-│
-├── windows/             # Windows configs (archived)
-│   ├── collect-windows-configs.ps1
-│   ├── windows-terminal.json
-│   ├── vscode-settings.json
-│   └── ...
-│
-├── scripts/
-│   ├── collect-cachyos-configs.sh  # CachyOS collector
-│   ├── collect-wsl-configs.sh      # WSL collector
-│   └── bounty/                     # Bug bounty toolkit
-│       ├── install-tools.sh
-│       ├── recon.sh
-│       └── okta-recon.sh
-│
-├── docs/                # Session notes
-│   └── SESSION-*.md
-│
-└── install.sh           # Auto-symlink installer
-```
-
-## Config Collectors
-
-### Package Tracking
-```bash
-# Update package lists (run after installing new apps)
-./scripts/packages.sh
-
-# Install packages on new system
-./scripts/install-packages.sh
-```
-
-### CachyOS / ML4W / Hyprland
-```bash
-cd ~/.dotfiles
-bash scripts/collect-cachyos-configs.sh
-```
-Collects: Hyprland, Waybar, ML4W, Kitty, Fish, btop, packages, ZFS info, VM list
-
-### WSL (Ubuntu)
-```bash
-bash scripts/collect-wsl-configs.sh
-```
-
-### Windows (PowerShell)
-```powershell
-& "\\wsl$\Ubuntu-22.04\home\rich\.dotfiles\windows\collect-windows-configs.ps1"
-```
-
-## Installation
-
-### Full Installation
-```bash
-./install.sh --all    # or just ./install.sh
-```
-
-### Selective Installation
-```bash
-./install.sh --shell  # Only shell configs
-./install.sh --git    # Only git config
-./install.sh --vim    # Only vim config
-```
-
-### Manual Symlinks (CachyOS)
-```bash
-# Hyprland (backup ML4W originals first)
-ln -sf ~/.dotfiles/config/hypr/hyprland.conf ~/.config/hypr/hyprland.conf
-
-# Kitty
-ln -sf ~/.dotfiles/config/kitty/kitty.conf ~/.config/kitty/kitty.conf
-
-# Fish
-ln -sf ~/.dotfiles/config/fish/config.fish ~/.config/fish/config.fish
-
-# Git
-ln -sf ~/.dotfiles/git/gitconfig ~/.gitconfig
-```
-
-## Bug Bounty Toolkit
-
-See [scripts/bounty/README.md](scripts/bounty/README.md)
-
-```bash
-# Install tools on hunting VM
-cd ~/.dotfiles/scripts/bounty
-./install-tools.sh
-
-# Run recon
-./okta-recon.sh okta.com
-./recon.sh target.com program-name
-```
-
-## Known Fixes
-
-### eza libllhttp version mismatch (CachyOS)
-When `llhttp` updates but `eza` isn't rebuilt yet:
-```bash
-# Check the issue
-ldd /usr/bin/eza | grep "not found"
-# Symlink the new version
-sudo ln -s /usr/lib/libllhttp.so.9.3 /usr/lib/libllhttp.so.9.2
-```
-
-## Syncing Across Machines
-
-```bash
-# On a new machine
-git clone https://github.com/richknowles/.dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-./install.sh
-
-# To update
-cd ~/.dotfiles
 git pull
-./install.sh
+git add .
+nix build .#ventoy-nix
+
 ```
 
-## License
+The resulting ISO will be in `result/iso/nixos.iso`.
 
-MIT - Feel free to fork and customize!
+### 2. The DATA Partition
+
+Ensure your persistent USB partition is formatted as **ext4** and labeled **DATA**.
+To create it manually:
+
+```bash
+mkfs.ext4 -L DATA /dev/sdXy
+
+```
+
+### 3. Adding New Tools
+
+Edit the `environment.systemPackages` block in `flake.nix` on GitHub, then pull and rebuild. Nix handles the dependencies and configuration automatically.
+
+---
+
+## 📂 Repository Structure
+
+* `flake.nix` - The "DNA" of the system. Controls drivers, packages, and firewall.
+* `config/` - Custom configuration files (linked to RAM at boot).
+* `shell/` - Custom shell scripts and aliases.
+
+```
+
+
+
+### Final Notes
+* **The GIF:** I used a link to the official Hyprland demo GIF. It shows exactly what the tiling, gaps, and window animations look like.
+* **Firewall:** Remember that port **8080** and **4444** are open by default in this build for your proxies and shells.
+
+**Since this is your final summary, would you like me to double-check the `flake.nix` one last time for any potential syntax errors before you commit?**
+
+```
