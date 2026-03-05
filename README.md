@@ -64,13 +64,3 @@ Edit the `environment.systemPackages` block in `flake.nix` on GitHub, then pull 
 * `shell/` - Custom shell scripts and aliases.
 
 ```
-
-
-
-### Final Notes
-* **The GIF:** I used a link to the official Hyprland demo GIF. It shows exactly what the tiling, gaps, and window animations look like.
-* **Firewall:** Remember that port **8080** and **4444** are open by default in this build for your proxies and shells.
-
-**Since this is your final summary, would you like me to double-check the `flake.nix` one last time for any potential syntax errors before you commit?**
-
-```
