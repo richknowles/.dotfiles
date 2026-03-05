@@ -1,5 +1,5 @@
 {
-  description = "My Universal RAM-Booting OS with Nvidia Support";
+  description = "Rich's Ultimate RAM-Booting Security Lab";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -22,23 +22,33 @@
           networking.networkmanager.enable = true;
 
           # --- NVIDIA & GRAPHICS ---
-          # 1. Allow unfree for the proprietary driver
           nixpkgs.config.allowUnfree = true;
-          
-          # 2. Load the driver
           services.xserver.videoDrivers = [ "nvidia" ];
-          
           hardware.graphics = {
             enable = true;
             enable32Bit = true;
           };
-
           hardware.nvidia = {
             modesetting.enable = true;
             powerManagement.enable = false;
-            open = false; # Set to true only if you want the experimental open-source kernel module
+            open = false; 
             nvidiaSettings = true;
             package = config.boot.kernelPackages.nvidiaPackages.stable;
+          };
+
+          # --- SECURITY & FIREWALL ---
+          networking.firewall = {
+            enable = true;
+            allowedTCPPorts = [ 8080 4444 ];
+            allowedUDPPorts = [ 4444 ];
+            allowedTCPPortRanges = [ { from = 9000; to = 9010; } ];
+          };
+          
+          # LUKS Decryption for your 'DATA' partition
+          # Replace UUID with your actual UUID from 'blkid' later if label isn't enough
+          boot.initrd.luks.devices."cryptdata" = {
+            device = "/dev/disk/by-label/DATA"; 
+            preLVM = true;
           };
 
           # --- USER DEFINITION ---
@@ -48,31 +58,54 @@
             initialPassword = "nixos"; 
           };
 
+          # Permit the Panic Script to run without password
+          security.sudo.extraRules = [{
+            users = [ "nixos" ];
+            commands = [{
+              command = "/home/nixos/.local/bin/panic";
+              options = [ "NOPASSWD" ];
+            }];
+          }];
+
           # --- PACKAGE LIST ---
           environment.systemPackages = with pkgs; [
-            kitty fish fastfetch mc git vim tmux rclone 
-            nmap ffuf gobuster dnsrecon
-            hyprland waybar
+            # Core & UI
+            hyprland waybar kitty fish fastfetch mc git tmux rclone
+            # Editors
+            kate nano vim 
+            # Security Tools
+            burpsuite nmap metasploit ffuf gobuster subfinder amass waybackurls httpx chromium
           ];
 
-          # --- THE "DOTFILE" MAPPING ---
+          # --- THE "DOTFILE" MAPPING & PANIC SCRIPT ---
           system.activationScripts.dotfiles.text = ''
             USER_HOME="/home/nixos"
             mkdir -p $USER_HOME/.config
             
             # Symlinks from the Nix Store to the RAM $HOME
             ln -sfn ${./config/hypr} $USER_HOME/.config/hypr
+            ln -sfn ${./config/waybar} $USER_HOME/.config/waybar
             ln -sfn ${./config/fish} $USER_HOME/.config/fish
             ln -sfn ${./shell/bashrc} $USER_HOME/.bashrc
             ln -sfn ${./vim/vimrc} $USER_HOME/.vimrc
             
+            # Create the Panic Script
+            mkdir -p $USER_HOME/.local/bin
+            cat << 'EOF' > $USER_HOME/.local/bin/panic
+            #!/bin/sh
+            sync
+            echo 1 > /proc/sys/kernel/sysrq
+            echo b > /proc/sys/kernel/sysrq
+            EOF
+            chmod +x $USER_HOME/.local/bin/panic
+
             chown -R nixos:users $USER_HOME
           '';
 
           # --- AUTO-MOUNT EXTERNAL DATA ---
           fileSystems."/home/nixos/work" = {
-            device = "/dev/disk/by-label/DATA";
-            fsType = "auto";
+            device = "/dev/mapper/cryptdata";
+            fsType = "ext4";
             options = [ "nofail" "user" ];
           };
         })
