@@ -1,5 +1,5 @@
 {
-  description = "Rich's Ultimate RAM-Booting Security Lab";
+  description = "My Ultimate RAM-Booting Security Lab";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -24,15 +24,10 @@
           # --- NVIDIA & GRAPHICS ---
           nixpkgs.config.allowUnfree = true;
           services.xserver.videoDrivers = [ "nvidia" ];
-          hardware.graphics = {
-            enable = true;
-            enable32Bit = true;
-          };
+          hardware.graphics.enable = true;
           hardware.nvidia = {
             modesetting.enable = true;
-            powerManagement.enable = false;
             open = false; 
-            nvidiaSettings = true;
             package = config.boot.kernelPackages.nvidiaPackages.stable;
           };
 
@@ -40,25 +35,20 @@
           networking.firewall = {
             enable = true;
             allowedTCPPorts = [ 8080 4444 ];
-            allowedUDPPorts = [ 4444 ];
-            allowedTCPPortRanges = [ { from = 9000; to = 9010; } ];
           };
           
-          # LUKS Decryption for your 'DATA' partition
-          # Replace UUID with your actual UUID from 'blkid' later if label isn't enough
           boot.initrd.luks.devices."cryptdata" = {
             device = "/dev/disk/by-label/DATA"; 
             preLVM = true;
           };
 
-          # --- USER DEFINITION ---
+          # --- USER & SUDO ---
           users.users.nixos = {
             isNormalUser = true;
             extraGroups = [ "wheel" "networkmanager" "video" ];
             initialPassword = "nixos"; 
           };
 
-          # Permit the Panic Script to run without password
           security.sudo.extraRules = [{
             users = [ "nixos" ];
             commands = [{
@@ -69,28 +59,23 @@
 
           # --- PACKAGE LIST ---
           environment.systemPackages = with pkgs; [
-            # Core & UI
             hyprland waybar kitty fish fastfetch mc git tmux rclone
-            # Editors
             kate nano vim 
-            # Security Tools
             burpsuite nmap metasploit ffuf gobuster subfinder amass waybackurls httpx chromium
           ];
 
-          # --- THE "DOTFILE" MAPPING & PANIC SCRIPT ---
+          # --- THE "DOTFILE" MAPPING & AUTO-GENERATED CONFIGS ---
           system.activationScripts.dotfiles.text = ''
             USER_HOME="/home/nixos"
-            mkdir -p $USER_HOME/.config
-            
-            # Symlinks from the Nix Store to the RAM $HOME
-            ln -sfn ${./config/hypr} $USER_HOME/.config/hypr
-            ln -sfn ${./config/waybar} $USER_HOME/.config/waybar
-            ln -sfn ${./config/fish} $USER_HOME/.config/fish
-            ln -sfn ${./shell/bashrc} $USER_HOME/.bashrc
-            ln -sfn ${./vim/vimrc} $USER_HOME/.vimrc
-            
-            # Create the Panic Script
+            mkdir -p $USER_HOME/.config/waybar
+            mkdir -p $USER_HOME/.config/hypr
             mkdir -p $USER_HOME/.local/bin
+
+            # 1. Symlinks from your existing Repo folders (Failsafe)
+            [ -d ${./config/hypr} ] && ln -sfn ${./config/hypr} $USER_HOME/.config/hypr
+            [ -f ${./shell/bashrc} ] && ln -sfn ${./shell/bashrc} $USER_HOME/.bashrc
+
+            # 2. GENERATE PANIC SCRIPT
             cat << 'EOF' > $USER_HOME/.local/bin/panic
             #!/bin/sh
             sync
@@ -99,10 +84,43 @@
             EOF
             chmod +x $USER_HOME/.local/bin/panic
 
+            # 3. GENERATE HYPRLAND CONFIG (Auto-starts Waybar and Fastfetch)
+            cat << 'EOF' > $USER_HOME/.config/hypr/hyprland.conf
+            monitor=,preferred,auto,1
+            exec-once = waybar
+            exec-once = kitty -e fish -c "fastfetch; exec fish"
+            env = WLR_NO_HARDWARE_CURSORS,1
+            env = LIBVA_DRIVER_NAME,nvidia
+            input { kb_layout = us }
+            general { gaps_in = 5; gaps_out = 10; border_size = 2; col.active_border = rgba(33ccffee) }
+            # Simple exit bind: Super + M
+            bind = SUPER, M, exit, 
+            EOF
+
+            # 4. GENERATE WAYBAR CONFIG
+            cat << 'EOF' > $USER_HOME/.config/waybar/config
+            {
+                "layer": "top",
+                "modules-left": ["hyprland/workspaces"],
+                "modules-center": ["clock"],
+                "modules-right": ["cpu", "memory", "network", "custom/panic"],
+                "custom/panic": {
+                    "format": " 💀 PANIC ",
+                    "on-click": "sudo /home/nixos/.local/bin/panic",
+                    "tooltip": false
+                }
+            }
+            EOF
+
+            # 5. GENERATE WAYBAR STYLE
+            cat << 'EOF' > $USER_HOME/.config/waybar/style.css
+            window#waybar { background: rgba(43, 48, 59, 0.7); color: #ffffff; font-family: sans-serif; }
+            #custom-panic { background: #ff5555; color: white; font-weight: bold; padding: 0 10px; border-radius: 5px; margin: 5px; }
+            EOF
+
             chown -R nixos:users $USER_HOME
           '';
 
-          # --- AUTO-MOUNT EXTERNAL DATA ---
           fileSystems."/home/nixos/work" = {
             device = "/dev/mapper/cryptdata";
             fsType = "ext4";
