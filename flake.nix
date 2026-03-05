@@ -13,7 +13,7 @@
 
   outputs = { self, nixpkgs, nixos-generators, ... }: {
     # This defines a specific "build" target called 'ventoy-nix'
-    packages.x86_64-linux.ventoy-demo = nixos-generators.nixosGenerate {
+    packages.x86_64-linux.ventoy-nix = nixos-generators.nixosGenerate {
       system = "x86_64-linux";
       format = "iso";
       modules = [
