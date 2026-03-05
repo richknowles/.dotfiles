@@ -37,6 +37,7 @@
             allowedTCPPorts = [ 8080 4444 ];
           };
           
+          # LUKS Device Mapping
           boot.initrd.luks.devices."cryptdata" = {
             device = "/dev/disk/by-label/DATA"; 
             preLVM = true;
@@ -59,8 +60,11 @@
 
           # --- PACKAGE LIST ---
           environment.systemPackages = with pkgs; [
+            # UI & Shell
             hyprland waybar kitty fish fastfetch mc git tmux rclone
-            kate nano vim 
+            # Editors (Fixed Kate package name)
+            kdePackages.kate nano vim 
+            # Tools
             burpsuite nmap metasploit ffuf gobuster subfinder amass waybackurls httpx chromium
           ];
 
@@ -71,11 +75,11 @@
             mkdir -p $USER_HOME/.config/hypr
             mkdir -p $USER_HOME/.local/bin
 
-            # 1. Symlinks from your existing Repo folders (Failsafe)
+            # 1. Symlinks from Repo (Failsafe)
             [ -d ${./config/hypr} ] && ln -sfn ${./config/hypr} $USER_HOME/.config/hypr
             [ -f ${./shell/bashrc} ] && ln -sfn ${./shell/bashrc} $USER_HOME/.bashrc
 
-            # 2. GENERATE PANIC SCRIPT
+            # 2. PANIC SCRIPT
             cat << 'EOF' > $USER_HOME/.local/bin/panic
             #!/bin/sh
             sync
@@ -84,7 +88,7 @@
             EOF
             chmod +x $USER_HOME/.local/bin/panic
 
-            # 3. GENERATE HYPRLAND CONFIG (Auto-starts Waybar and Fastfetch)
+            # 3. HYPRLAND CONFIG
             cat << 'EOF' > $USER_HOME/.config/hypr/hyprland.conf
             monitor=,preferred,auto,1
             exec-once = waybar
@@ -93,11 +97,15 @@
             env = LIBVA_DRIVER_NAME,nvidia
             input { kb_layout = us }
             general { gaps_in = 5; gaps_out = 10; border_size = 2; col.active_border = rgba(33ccffee) }
-            # Simple exit bind: Super + M
+            
+            # Keybinds
+            bind = SUPER, Q, exec, kitty
+            bind = SUPER, E, exec, kate
+            bind = SUPER, B, exec, burpsuite
             bind = SUPER, M, exit, 
             EOF
 
-            # 4. GENERATE WAYBAR CONFIG
+            # 4. WAYBAR CONFIG
             cat << 'EOF' > $USER_HOME/.config/waybar/config
             {
                 "layer": "top",
@@ -112,7 +120,7 @@
             }
             EOF
 
-            # 5. GENERATE WAYBAR STYLE
+            # 5. WAYBAR STYLE
             cat << 'EOF' > $USER_HOME/.config/waybar/style.css
             window#waybar { background: rgba(43, 48, 59, 0.7); color: #ffffff; font-family: sans-serif; }
             #custom-panic { background: #ff5555; color: white; font-weight: bold; padding: 0 10px; border-radius: 5px; margin: 5px; }
@@ -121,6 +129,7 @@
             chown -R nixos:users $USER_HOME
           '';
 
+          # --- PERSISTENT STORAGE ---
           fileSystems."/home/nixos/work" = {
             device = "/dev/mapper/cryptdata";
             fsType = "ext4";
