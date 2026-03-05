@@ -1,11 +1,3 @@
-This is a great idea. Since you're building a "Security Lab," having a README that looks as sharp as the OS is essential.
-
-I have included a high-quality GIF placeholder at the top of the README that shows the standard **Hyprland** tiling and animations. I also reorganized the sections to match the final features we built (the Panic button, the encrypted data partition, and the Nvidia support).
-
-### Updated README.md
-
-Copy this into your `README.md` on GitHub:
-
 ```markdown
 # 💀 My Ultimate RAM-Booting Security Lab
 
