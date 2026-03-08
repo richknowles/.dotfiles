@@ -68,12 +68,30 @@ Edit the `environment.systemPackages` block in `flake.nix` on GitHub, then pull 
 
 ## 🔧 Scripts
 
-### Quick Restore (Any Linux Distro)
+Think of the restore process as a three-act production:
 
-Clone this repo on a fresh system and run:
+### Act 1: CLI Foundation
+```bash
+~/.dotfiles/scripts/install.sh
+```
+**install.sh** handles your command line identity. It symlinks `.bashrc`, `.zshrc`, `.vimrc`, and `.gitconfig`. These configs work on ANY Linux, macOS, WSL - even Windows. Your terminal looks and feels the same everywhere.
 
+### Act 2: Desktop Identity
+```bash
+~/.dotfiles/scripts/restore.sh cachyos
+```
+**restore.sh** handles your graphical desktop. It symlinks Hyprland, Waybar, Fish shell, ml4w, Kitty, Btop, Fastfetch configs from `~/.dotfiles/config/` to `~/.config/`. These are Wayland-specific and only matter on a Hyprland desktop.
+
+### Act 3: Login Manager
+```bash
+~/.dotfiles/scripts/setup-sddm.sh
+```
+**setup-sddm.sh** configures SDDM to default to Hyprland. Run with sudo. No more booting into Plasma by accident.
+
+### Full Production (Any Linux Distro)
 ```bash
 git clone https://github.com/richknowles/.dotfiles ~/.dotfiles
+~/.dotfiles/scripts/install.sh
 ~/.dotfiles/scripts/restore.sh cachyos
 ~/.dotfiles/scripts/setup-sddm.sh
 ```
