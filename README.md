@@ -62,5 +62,37 @@ Edit the `environment.systemPackages` block in `flake.nix` on GitHub, then pull 
 * `flake.nix` - The "DNA" of the system. Controls drivers, packages, and firewall.
 * `config/` - Custom configuration files (linked to RAM at boot).
 * `shell/` - Custom shell scripts and aliases.
+* `scripts/` - Automation scripts for restore and setup.
+
+---
+
+## 🔧 Scripts
+
+### Quick Restore (Any Linux Distro)
+
+Clone this repo on a fresh system and run:
+
+```bash
+git clone https://github.com/richknowles/.dotfiles ~/.dotfiles
+~/.dotfiles/scripts/restore.sh cachyos
+~/.dotfiles/scripts/setup-sddm.sh
+```
+
+### Script Breakdown
+
+| Script | Lines | Purpose |
+| :--- | :--- | :--- |
+| [`restore.sh`](scripts/restore.sh) | 63 | Symlinks all configs from `~/.dotfiles/config/` to `~/.config/` on any Linux distro. Supports hypr, waybar, fish, fastfetch, ml4w, kitty, btop, shell, vim, and git. Uses `link_if_exists` function - only creates symlink if source exists. Prints ✓ for success, ✗ for missing source. |
+| [`setup-sddm.sh`](scripts/setup-sddm.sh) | 14 | Configures SDDM login manager to default to Hyprland session. Creates `/etc/sddm.conf.d/default-session.conf` with `Session=hyprland.desktop`. Run with sudo after restore. |
+
+### Other Scripts
+
+| Script | Purpose |
+| :--- | :--- |
+| [`collect-cachyos-configs.sh`](scripts/collect-cachyos-configs.sh) | Collects current CachyOS/ML4W/Hyprland configs into the dotfiles repo. Run from `~/.dotfiles` directory. |
+| [`collect-wsl-configs.sh`](scripts/collect-wsl-configs.sh) | Collects WSL configs into the dotfiles repo. |
+| [`packages.sh`](scripts/packages.sh) | Saves current package lists (pacman, AUR, flatpak) to `packages/` directory. |
+| [`install-packages.sh`](scripts/install-packages.sh) | Installs packages from saved lists. |
+| [`install.sh`](scripts/install.sh) | Main installer - symlinks shell, git, and vim configs. Supports `--all`, `--shell`, `--git`, `--vim` flags. |
 
 ```
