@@ -16,7 +16,7 @@
         "custom/appmenu",
         "clock",
         "wlr/taskbar",
-        "group/quicklinks",
+        //"group/quicklinks",
         //"custom/nowplaying",        
         "custom/empty"
     ],
