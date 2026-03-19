@@ -290,7 +290,7 @@
     "modules": [
       "custom/tools",
       "custom/cliphist",
-      "custom/hypridle",
+//      "custom/hypridle",
       "custom/hyprshade",
       "power-profiles-daemon"
     ]
