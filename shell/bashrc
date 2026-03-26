@@ -158,3 +158,8 @@ fi
 if [ -f "$HOME/.bashrc.local" ]; then
     source "$HOME/.bashrc.local"
 fi
+
+if [ -z "$SSH_AUTH_SOCK" ]; then
+   eval "$(ssh-agent -s)"
+   ssh-add ~/.ssh/id_ed25519 2>/dev/null
+fi

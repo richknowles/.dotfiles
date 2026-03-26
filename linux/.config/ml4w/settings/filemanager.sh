@@ -1,1 +1,1 @@
-dolphin --new-window
+nemo
