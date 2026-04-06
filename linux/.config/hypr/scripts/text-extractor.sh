@@ -21,43 +21,10 @@ check_deps() {
   fi
 }
 
-# Check if command exists
-_checkCommandExists() {
-    cmd="$1"
-    if ! command -v "$cmd" >/dev/null; then
-        echo 1
-        return
-    fi
-    echo 0
-    return
-}
-
 check_deps
 
-# Arch
-if [[ $(_checkCommandExists "pacman") == 0 ]]; then
-    OCR_LANGUAGE_LIST="$(pacman -Qq | grep -iE "tesseract-(ocr|data|langpack)*-" | awk -F '-' '{print $NF}')"
-# Fedora
-elif [[ $(_checkCommandExists "dnf") == 0 ]]; then
-    OCR_LANGUAGE_LIST="$(dnf list --installed | grep -iE "tesseract-(ocr|data|langpack)*-" | awk -F '-' '{print $NF}')"
-# Opensuse
-else
-    OCR_LANGUAGE_LIST="$(zypper se -i | grep -iE "tesseract-(ocr|data|langpack)*-" | awk -F '-' '{print $NF}')"
-fi
 
-argc() { echo $#; }
-rofi_cmd() {
-    rofi -dmenu -replace -config ~/.config/rofi/config-ocr-lang.rasi -i -no-show-icons -l 3 -width 30 -p "Select the OCR language"
-}
-
-if [ "$(argc $OCR_LANGUAGE_LIST)" -gt 1 ]; then
-    OCR_LANGUAGE=$(echo -e "$OCR_LANGUAGE_LIST" | rofi_cmd)
-    sleep 0.5 || true
-fi
-
-if [ -z "$OCR_LANGUAGE" ]; then
-    OCR_LANGUAGE="eng"
-fi
+OCR_LANGUAGE="eng"
 
 hyprpicker -r -z &
 PICKER_PID=$!

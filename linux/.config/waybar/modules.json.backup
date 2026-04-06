@@ -64,6 +64,15 @@
   "custom/empty": {
     "format": ""
   },
+  // Empty with margin
+  "custom/empty-ai1": {
+    "format": "       ",
+    "margin-left": 30
+  },
+  "custom/empty-ai2": {
+    "format": "       ",
+    "margin-right": 30
+  },
   // Tools
   "custom/tools": {
     "format": "",
@@ -290,18 +299,26 @@
     "modules": [
       "custom/tools",
       "custom/cliphist",
-      "custom/hypridle",
+//      "custom/hypridle",
       "custom/hyprshade",
       "power-profiles-daemon"
     ]
   },
-  // Group Links
-  "group/links": {
-    "orientation": "horizontal",
-    "modules": [
-      "custom/chatgpt",
-      "custom/empty"
-    ]
+
+  // AI Menu
+  "custom/ai": {
+    "format": "🤖",
+    "tooltip-format": "AI Menu - Click to open",
+    "on-click": "~/.config/hypr/scripts/ai-menu.sh --menu"
+  },
+  // Network Traffic
+  "custom/net-traffic": {
+    "exec": "~/.config/waybar/scripts/network-traffic.sh",
+    "format": "{}",
+    "return-type": "json",
+    "interval": 1,
+    "escape": false,
+    "tooltip-format": "Network Traffic"
   },
   // Group Settings
   "group/settings": {
@@ -323,9 +340,9 @@
     "format-wifi": " {signalStrength}%",
     "format-ethernet": "  {ifname}",
     "format-disconnected": "Disconnected ⚠",
-    "tooltip-format": " {ifname} via {gwaddri}",
-    "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
-    "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
+    "tooltip-format": "IP: {ipaddr}\n↓ {bandwidthDownBits}\n↑ {bandwidthUpBits}",
+    "tooltip-format-wifi": "IP: {ipaddr}\n{essid}\nSignal: {signalStrength}%\n↓ {bandwidthDownBits}\n↑ {bandwidthUpBits}",
+    "tooltip-format-ethernet": "IP: {ipaddr}\n↓ {bandwidthDownBits}\n↑ {bandwidthUpBits}",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
     "on-click": "~/.config/ml4w/settings/networkmanager.sh",
