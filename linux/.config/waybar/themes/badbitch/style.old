@@ -403,24 +403,6 @@ window#waybar.empty #window {
 }
 
 /* -----------------------------------------------------
- * GPU
- * ----------------------------------------------------- */
-#custom-gpu {
-    background-color: @backgroundlight;
-    font-size: 16px;
-    color: #7aa2f7; /* Keep the cool blue for the text/icon! */
-    border-radius: 15px;
-    padding: 2px 10px 0px 10px;
-    margin: 5px 15px 5px 0px;
-    opacity: 0.8;
-    font-weight: bold;
-}
-
-#custom-gpu.warning {
-    color: #e0af68; /* Orange if things get warm */
-}
-
-/* -----------------------------------------------------
  * Pulseaudio
  * ----------------------------------------------------- */
 

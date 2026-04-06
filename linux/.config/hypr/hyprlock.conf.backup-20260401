@@ -16,10 +16,10 @@ general {
     ignore_empty_input = true
 }
 
-#background {
-#    monitor =
-#    path = , alpha = 0
-#}
+background {
+    monitor =
+    path = $ml4w_cache_folder/blurred_wallpaper.png   # only png supported for now
+}
 
 input-field {
     monitor =

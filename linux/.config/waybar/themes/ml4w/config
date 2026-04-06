@@ -30,6 +30,7 @@
         //"backlight",
         "bluetooth",
         "network",
+        "custom/gpu",
         "battery",
         "group/hardware",
         "group/tools",
