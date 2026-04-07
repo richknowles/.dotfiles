@@ -21,6 +21,7 @@
     // Modules Center
     "modules-center": [
         "hyprland/workspaces",
+        "custom/captain",
         "custom/empty"
     ],
     // Modules Right    
