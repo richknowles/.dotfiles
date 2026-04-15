@@ -171,3 +171,6 @@ export OPENCODE_PERMISSION_EDIT=allow
 export OPENCODE_PERMISSION_WEBFETCH=allow
 export OPENCODE_PERMISSION_DOOM_LOOP=allow
 export OPENCODE_PERMISSION_EXTERNAL_DIRECTORY=allow
+
+# Added by LM Studio CLI tool (lms)
+export PATH="$PATH:/home/rich/.lmstudio/bin"
