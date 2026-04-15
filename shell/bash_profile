@@ -8,3 +8,6 @@ fi
 
 # Add any login-specific configuration below
 # (Environment variables that should only be set once)
+
+# Added by LM Studio CLI tool (lms)
+export PATH="$PATH:/home/rich/.lmstudio/bin"
