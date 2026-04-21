@@ -3,8 +3,8 @@
 
 [user]
     # IMPORTANT: Update these with your actual info
-    name = Rich Knowles
-    email = rightontron@protonmail.com
+	name = Rich Knowles
+	email = rich@itwerks.net
 
 [init]
     defaultBranch = main

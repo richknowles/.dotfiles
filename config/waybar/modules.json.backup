@@ -311,23 +311,14 @@
     "tooltip-format": "AI Menu - Click to open",
     "on-click": "~/.config/hypr/scripts/ai-menu.sh --menu"
   },
-  // Network Traffic - Azucar Fantastico
+  // Network Traffic
   "custom/net-traffic": {
-    "exec": "~/.config/waybar/scripts/network-azucar.sh",
+    "exec": "~/.config/waybar/scripts/network-traffic.sh",
     "format": "{}",
     "return-type": "json",
-    "interval": 0.5,
+    "interval": 1,
     "escape": false,
-    "tooltip-format": "Network Activity"
-  },
-  // Captain's Personal Stats - Richard's Big Pickle Edition
-  "custom/captain": {
-    "exec": "~/.config/waybar/scripts/captain-stats.sh",
-    "format": "{}",
-    "return-type": "json",
-    "interval": 2,
-    "escape": false,
-    "tooltip-format": "Captain's Command Center"
+    "tooltip-format": "Network Traffic"
   },
   // Group Settings
   "group/settings": {
@@ -439,16 +430,22 @@
   "backlight": {
     "format": "{icon} {percent}%",
     "format-icons": [
-      "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""   
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
     ],
     "scroll-step": 1
-  },
-  // gpu:
-   "custom/gpu": {
-    "exec": "/home/rich/.config/waybar/scripts/gpu.sh",
-    "return-type": "json",
-    "format": "{}",
-    "interval": 2,
-    "on-click": "ghostty -e nvtop"
-   },
+  }
 }

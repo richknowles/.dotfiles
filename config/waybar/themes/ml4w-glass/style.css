@@ -11,7 +11,7 @@
  * ----------------------------------------------------- */
 
  * {
-    font-family: "Fira Sans Semibold", "Font Awesome 7 Free", "Font Awesome 7 Brands", "Font Awesome 6 Free", "Font Awesome 6 Brands", FontAwesome, "Material Icons", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Manrope", "Fira Sans Semibold", "Font Awesome 7 Free", "Font Awesome 7 Brands", "Font Awesome 6 Free", "Font Awesome 6 Brands", FontAwesome, "Material Icons", Roboto, Helvetica, Arial, sans-serif;
     border: none;
     border-radius: 0px;
 }
@@ -25,7 +25,7 @@ window#waybar {
     border-radius: 12px;
     background: radial-gradient(circle at 50% 250%, alpha(darker(@surface),0.9), alpha(@surface_dim,0.9)) padding-box,
         linear-gradient(@primary,@on_primary) border-box;
-    border: 1px solid transparent;	
+    border: 2px solid transparent;	
     opacity:0.8;
     padding:0px;
     margin:10px;
@@ -37,7 +37,7 @@ window#waybar {
     border-radius: 12px;
     background: radial-gradient(circle at 50% 250%, alpha(darker(@surface),0.9), alpha(@surface_dim,0.9)) padding-box,
         linear-gradient(@primary,@on_primary) border-box;
-    border: 1px solid transparent;	
+    border: 2px solid transparent;	
     opacity:0.8;
     padding:0px;
     margin:10px;
@@ -49,7 +49,7 @@ window#waybar {
     border-radius: 12px;
     background: radial-gradient(circle at 50% 250%, alpha(darker(@surface),0.9), alpha(@surface_dim,0.9)) padding-box,
         linear-gradient(@primary,@on_primary) border-box;
-    border: 1px solid transparent;	
+    border: 2px solid transparent;	
     opacity:0.8;
     margin:10px;
     box-shadow: inset 0px 2px 2px rgba(255, 255, 255, 0.2);
@@ -366,4 +366,18 @@ window#waybar.empty #window {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
+}
+
+/* 🏴‍☠️ Captain's Treasure Map - Richard's Big Pickle */
+#custom-captain {
+    font-family: "Manrope", "JetBrains Mono", "Fira Code", monospace;
+    font-size: 13px;
+    color: #f4d03f;
+    padding: 6px 16px;
+}
+
+/* Network Sparkline - Azucar Fantastico */
+#custom-net-traffic {
+    font-family: "Manrope", "JetBrains Mono", monospace;
+    font-size: 12px;
 }

@@ -1,0 +1,27 @@
+#!/bin/bash
+# Tools menu for waybar
+
+OPTIONS="gpick\nopencode\nRofi\nSystem Monitor\nFile Manager\nTerminal"
+
+CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -p "Tools")
+
+case "$CHOICE" in
+    gpick)
+        gpick -p -s &
+        ;;
+    opencode)
+        opencode &
+        ;;
+    Rofi)
+        rofi -show drun &
+        ;;
+    "System Monitor")
+        hyprtop &
+        ;;
+    "File Manager")
+        nautilus &
+        ;;
+    Terminal)
+        kitty &
+        ;;
+esac

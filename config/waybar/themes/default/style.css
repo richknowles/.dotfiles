@@ -288,3 +288,22 @@ label:focus {
 #scratchpad.empty {
 	background-color: transparent;
 }
+/* --- AZUCAR-FANTASTICO MANROPE OVERRIDE --- */
+* {
+    font-family: "Manrope", "Font Awesome 6 Free", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+#waybar {
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    font-size: 14px;
+}
+
+#clock, #workspaces button, #cpu, #memory, #battery, #pulseaudio, #network {
+    padding: 0 12px;
+    margin: 4px 3px;
+    border-radius: 10px;
+}
