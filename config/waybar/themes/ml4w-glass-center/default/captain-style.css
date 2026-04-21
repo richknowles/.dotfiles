@@ -1,0 +1,33 @@
+/* Captain's Treasure Map - Richard's Big Pickle Edition 🏴‍☠️ */
+
+#custom-captain {
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-size: 13px;
+    background: linear-gradient(90deg, rgba(30, 20, 10, 0.8) 0%, rgba(50, 40, 30, 0.8) 100%);
+    color: #f4d03f;
+    padding: 6px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(244, 208, 63, 0.3);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    transition: all 0.3s ease;
+}
+
+#custom-captain:hover {
+    background: linear-gradient(90deg, rgba(50, 40, 20, 0.9) 0%, rgba(70, 60, 40, 0.9) 100%);
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(244, 208, 63, 0.4);
+    border-color: rgba(244, 208, 63, 0.6);
+}
+
+/* Tooltip pirate styling */
+tooltip {
+    background: linear-gradient(180deg, #1a1410 0%, #2a2418 100%);
+    border: 2px solid #f4d03f;
+    border-radius: 10px;
+    color: #f4d03f;
+    font-family: "JetBrains Mono", monospace;
+}
+
+tooltip label {
+    color: #f4d03f;
+}

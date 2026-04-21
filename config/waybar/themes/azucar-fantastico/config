@@ -1,10 +1,10 @@
 {
     // General Settings
     "layer": "top",
-    "margin-top": 0,
+    "margin-top": 8,
     "margin-bottom": 0,
-    "margin-left": 0,
-    "margin-right": 0,
+    "margin-left": 8,
+    "margin-right": 8,
     "spacing": 0,
     // Load Modules
     "include": [
@@ -14,15 +14,13 @@
     // Modules Left
     "modules-left": [
         "custom/appmenu",
-        "hyprland/workspaces",
-        "wlr/taskbar",
-        //"group/quicklinks",
-        //"custom/nowplaying",        
-        "custom/empty"
+        "clock",
+        "custom/net-traffic",
+        "custom/ai"
     ],
     // Modules Center
     "modules-center": [
-        "hyprland/window",
+        "hyprland/workspaces",
         "custom/empty"
     ],
     // Modules Right    
@@ -38,7 +36,6 @@
         "tray",
         "custom/notification",
         "custom/exit",
-        "custom/ml4w-welcome",
-        "clock"
+        "custom/ml4w-welcome"
     ]
 }

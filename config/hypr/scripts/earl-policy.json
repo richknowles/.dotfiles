@@ -1,0 +1,79 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "EarlCanListHisBuckets",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation",
+        "s3:CreateBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::copenlaw-locked",
+        "arn:aws:s3:::copenlaw-unlocked"
+      ]
+    },
+    {
+      "Sid": "AllowListAllBuckets",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListAllMyBuckets"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "EarlCanReadBothBuckets",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion"
+      ],
+      "Resource": [
+        "arn:aws:s3:::copenlaw-locked/*",
+        "arn:aws:s3:::copenlaw-unlocked/*"
+      ]
+    },
+    {
+      "Sid": "EarlCanWriteUnlockedBucket",
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:PutObjectAcl",
+        "s3:DeleteObject",
+        "s3:DeleteObjectVersion"
+      ],
+      "Resource": "arn:aws:s3:::copenlaw-unlocked/*"
+    },
+    {
+      "Sid": "EarlCanWriteLockedBucketNoDelete",
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:PutObjectAcl"
+      ],
+      "Resource": "arn:aws:s3:::copenlaw-locked/*"
+    },
+    {
+      "Sid": "LockedBucketIsEternal",
+      "Effect": "Deny",
+      "Action": [
+        "s3:DeleteObject",
+        "s3:DeleteObjectVersion",
+        "s3:DeleteBucket"
+      ],
+      "Resource": "arn:aws:s3:::copenlaw-locked/*"
+    },
+    {
+      "Sid": "EarlIsBlindToAllElse",
+      "Effect": "Deny",
+      "Action": [
+        "s3:ListAllMyBuckets"
+      ],
+      "NotResource": [
+        "arn:aws:s3:::copenlaw-locked",
+        "arn:aws:s3:::copenlaw-unlocked"
+      ]
+    }
+  ]
+}
