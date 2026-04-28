@@ -1,0 +1,28 @@
+/* -----------------------------------------------------
+ * Import Matugen Colors
+ * ----------------------------------------------------- */
+@import '../../../../../.config/waybar/colors.css';
+
+@import '../../ml4w-glass/style.css';
+
+/* -----------------------------------------------------
+ * Zugbar Styles
+ * ----------------------------------------------------- */
+.zugbar-idle {
+  color: #6272a4;
+}
+.zugbar-light {
+  color: #8be9fd;
+}
+.zugbar-medium {
+  color: #50fa7b;
+}
+.zugbar-heavy {
+  color: #ffb86c;
+}
+.zugbar-extreme {
+  color: #ff5555;
+}
+.zugbar-offline {
+  color: #ff5555;
+}

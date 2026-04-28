@@ -174,3 +174,5 @@ export OPENCODE_PERMISSION_EXTERNAL_DIRECTORY=allow
 
 # Added by LM Studio CLI tool (lms)
 export PATH="$PATH:/home/rich/.lmstudio/bin"
+export GDK_BACKEND=wayland
+export MOZ_ENABLE_WAYLAND=1

@@ -299,7 +299,7 @@
     "modules": [
       "custom/tools",
       "custom/cliphist",
-//      "custom/hypridle",
+      "custom/hypridle",
       "custom/hyprshade",
       "power-profiles-daemon"
     ]
@@ -313,10 +313,10 @@
   },
   // Network Traffic
   "custom/net-traffic": {
-    "exec": "~/.config/waybar/scripts/network-traffic.sh",
+    "exec": "~/.config/waybar/scripts/network-azucar.sh",
     "format": "{}",
     "return-type": "json",
-    "interval": 1,
+    "interval": 0.5,
     "escape": false,
     "tooltip-format": "Network Traffic"
   },
