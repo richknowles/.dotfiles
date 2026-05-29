@@ -320,6 +320,15 @@
     "escape": false,
     "tooltip-format": "Network Traffic"
   },
+  // 🦚 Oz Feather — living mood mesh
+  "custom/oz-feather": {
+    "exec": "/home/rich/projects/oz-feather/daemon.py",
+    "format": "{}",
+    "return-type": "json",
+    "interval": 0.5,
+    "escape": false,
+    "tooltip": true
+  },
   // Group Settings
   "group/settings": {
     "orientation": "inherit",
@@ -381,7 +390,8 @@
       "balanced": "",
       "power-saver": ""
     },
-    "on-click": "~/.config/waybar/scripts/power-cycle.sh"
+    "on-scroll-up": "true",
+    "on-scroll-down": "true"
   },
   // Pulseaudio
   "pulseaudio": {
@@ -446,22 +456,5 @@
       ""
     ],
     "scroll-step": 1
-  },
-  // Hermes AI Gateway
-  "custom/hermes": {
-    "exec": "~/.config/waybar/scripts/hermes-status.sh",
-    "format": "{}",
-    "return-type": "json",
-    "interval": 10,
-    "on-click": "~/.config/waybar/scripts/hermes-menu.sh --status",
-    "on-click-right": "~/.config/waybar/scripts/hermes-menu.sh"
-  },
-  // Rclone Manager
-  "custom/rclone-status": {
-    "exec": "~/.config/waybar/scripts/rclone-status.sh",
-    "format": "{}",
-    "return-type": "json",
-    "interval": 30,
-    "on-click": "rclone-manager"
   }
 }

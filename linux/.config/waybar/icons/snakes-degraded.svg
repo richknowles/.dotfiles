@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="205 185 100 85" width="100" height="85">
+  <defs>
+    <filter id="glow-front" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-back" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <g filter="url(#glow-back)">
+      <path d="M 292 200 C 280 188, 252 190, 248 208 C 244 226, 272 230, 274 244 C 276 258, 250 258, 244 250" fill="none" stroke="#ff8800" stroke-width="6" stroke-opacity="0.5"/>
+      <path d="M 244 250 C 240 242, 248 232, 256 235" fill="none" stroke="#ff8800" stroke-width="5" stroke-opacity="0.5"/>
+      <path d="M 297 200 L 292 194 L 285 199 L 290 206 Z" fill="#ff8800" fill-opacity="0.5"/>
+      <circle cx="291" cy="197" r="1.2" fill="#000000"/>
+    </g>
+    <g filter="url(#glow-front)">
+      <path d="M 220 200 C 232 188, 260 190, 264 208 C 268 226, 240 230, 238 244 C 236 258, 262 258, 268 250" fill="none" stroke="#ff8800" stroke-width="6" stroke-opacity="0.9"/>
+      <path d="M 268 250 C 272 242, 264 232, 256 235" fill="none" stroke="#ff8800" stroke-width="5" stroke-opacity="0.7"/>
+      <path d="M 215 200 L 220 194 L 227 199 L 222 206 Z" fill="#ff8800" fill-opacity="0.9"/>
+      <circle cx="221" cy="197" r="1.2" fill="#000000"/>
+      <path d="M 227 199 C 234 195, 238 192, 242 193 M 234 196 L 240 199" fill="none" stroke="#ff8800" stroke-width="1.5" stroke-opacity="0.8"/>
+    </g>
+    <g filter="url(#glow-back)">
+      <path d="M 256 235 C 250 232, 244 236, 244 240" fill="none" stroke="#ff8800" stroke-width="4" stroke-opacity="0.5"/>
+    </g>
+  </g>
+</svg>

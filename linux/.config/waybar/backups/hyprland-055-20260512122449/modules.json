@@ -447,15 +447,6 @@
     ],
     "scroll-step": 1
   },
-  // Hermes AI Gateway
-  "custom/hermes": {
-    "exec": "~/.config/waybar/scripts/hermes-status.sh",
-    "format": "{}",
-    "return-type": "json",
-    "interval": 10,
-    "on-click": "~/.config/waybar/scripts/hermes-menu.sh --status",
-    "on-click-right": "~/.config/waybar/scripts/hermes-menu.sh"
-  },
   // Rclone Manager
   "custom/rclone-status": {
     "exec": "~/.config/waybar/scripts/rclone-status.sh",

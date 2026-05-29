@@ -210,29 +210,6 @@ window#waybar.empty #window {
 }
 
 /* -----------------------------------------------------
- * Custom Hermes
- * ----------------------------------------------------- */
-
-#custom-hermes {
-    margin: 2px 4px;
-    padding: 6px 12px;
-    font-size: 24px;
-    color: transparent;
-    background-image: url('../../icons/snakes-up.svg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-#custom-hermes.down {
-    background-image: url('../../icons/snakes-down.svg');
-}
-
-#custom-hermes.degraded {
-    background-image: url('../../icons/snakes-degraded.svg');
-}
-
-/* -----------------------------------------------------
  * Custom Notification
  * ----------------------------------------------------- */
 

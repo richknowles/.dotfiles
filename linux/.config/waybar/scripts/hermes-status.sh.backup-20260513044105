@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Hermes AI Gateway status for Waybar
+# Returns JSON with class "up" or "down" so CSS can color the icon
+
+if pgrep -f "hermes.*gateway.run" > /dev/null 2>&1; then
+  echo '{"text": "", "class": "up", "tooltip": "Hermes Gateway: Running\nPID: '$(pgrep -f "hermes.*gateway.run" | head -1)'"}'
+else
+  echo '{"text": "", "class": "down", "tooltip": "Hermes Gateway: Stopped"}'
+fi
