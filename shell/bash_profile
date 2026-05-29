@@ -11,3 +11,10 @@ fi
 
 # Added by LM Studio CLI tool (lms)
 export PATH="$PATH:/home/rich/.lmstudio/bin"
+. "$HOME/.cargo/env"
+
+. "$HOME/.local/share/../bin/env"
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/rich/.local/bin:$PATH"

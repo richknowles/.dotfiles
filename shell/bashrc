@@ -176,3 +176,12 @@ export OPENCODE_PERMISSION_EXTERNAL_DIRECTORY=allow
 export PATH="$PATH:/home/rich/.lmstudio/bin"
 export GDK_BACKEND=wayland
 export MOZ_ENABLE_WAYLAND=1
+
+. "$HOME/.cargo/env"
+export SUPERMEMORY_API_KEY="sm_..."
+
+. "$HOME/.local/share/../bin/env"
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/rich/.local/bin:$PATH"
